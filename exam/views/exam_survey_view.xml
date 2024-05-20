@@ -1,0 +1,49 @@
+<odoo>
+	
+	<record model="ir.ui.view" id="survey_survey_form_exam_inherit">
+		<field name='name'>survey_survey_form_exam_inherit.form</field>
+		<field name="model">survey.survey</field>
+		<field name='inherit_id' ref='survey.survey_survey_view_form'/>
+		<field name='arch' type="xml">
+			<xpath expr="//field[@name='user_id']" position='after'>
+				<field name='school_id'/>
+                <field name="exam_type"/>
+				<field name='teacher_id'/>
+				<field name='class_id'/>
+				<field name='academic_year_id'/>
+                <field name="subject_id"/>
+				<field name='s_exam_id' invisible="1"/>
+
+			</xpath>
+            <xpath expr="//button[@name='action_send_survey']" position='attributes'>
+                <attribute name="context">{'default_standard_id' : class_id}</attribute>
+            </xpath>
+		</field>
+	</record>
+
+	<record id="survey_user_input_form_result_inherit" model="ir.ui.view">
+        <field name='name'>survey.user.input.form.result.inherit.form</field>
+        <field name="model">survey.user_input</field>
+        <field name='inherit_id' ref='survey.survey_user_input_view_form'/>
+        <field name='arch' type="xml">
+            <xpath expr="//group/field[@name='test_entry']" position='after'>
+                <field name='class_id'/>
+                <field name="subject_id"/>
+            </xpath>
+        </field>
+    </record>
+
+	<record id="survey_survey_form_invite_school_inherit" model="ir.ui.view">
+        <field name='name'>survey.survey.form.invite.school.inherit.form</field>
+        <field name="model">survey.invite</field>
+        <field name='inherit_id' ref='survey.survey_invite_view_form'/>
+        <field name='arch' type="xml">
+            <xpath expr="//field[@name='partner_ids']" position='attributes'>
+                <attribute name="domain">[('is_student','=', True),('student_id.standard_id','=', context.get('default_standard_id'))]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+
+
