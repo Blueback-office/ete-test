@@ -18,6 +18,7 @@ class SurveySurvey(models.Model):
         ("four", "Four Way Correction"),
         ("online", "Online")
     ])
+    option_count = fields.Char(string="No of options", placeholder="2 or 4", default="2")
 
 
 class SurveyUserInput(models.Model):
