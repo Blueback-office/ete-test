@@ -387,6 +387,13 @@ class SchoolStandard(models.Model):
     class_room_id = fields.Many2one(
         "class.room", "Room Number", help="Class room of the standard"
     )
+    display_name = fields.Char('Class', compute='_compute_display_name')
+
+    @api.depends('standard_id', 'division_id')
+    def _compute_display_name(self):
+        """Method to display standard and division"""
+        for div in self:
+            div.display_name = f"{div.standard_id.name}-{div.division_id.name}"
 
     @api.onchange("standard_id", "division_id")
     def onchange_combine(self):

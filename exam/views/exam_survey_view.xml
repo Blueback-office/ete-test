@@ -7,7 +7,7 @@
 		<field name='arch' type="xml">
 			<xpath expr="//field[@name='user_id']" position='after'>
 				<field name='school_id'/>
-                <field name="exam_type"/>
+                <field name="exam_type" invisible="1"/>
 				<field name='teacher_id'/>
 				<field name='class_id'/>
 				<field name='academic_year_id'/>

@@ -313,6 +313,7 @@
                             name="class_room_id"
                             options="{&quot;no_create&quot;: True}"
                         />
+                        <field name="display_name" invisible="1"/>
                         <field name="name" invisible="1" string="Name" />
                         <field
                             name="total_no_subjects"

@@ -48,7 +48,6 @@
                         <b>
                             <field name="reg_code" readonly="1" />
                         </b>
-                        <br />
                         <field
                             name="photo"
                             widget="image"
@@ -98,13 +97,6 @@
                                 help="Roll number of Student"
                                 readonly="1"
                             />
-                            <field
-                                name="year"
-                                placeholder="Year"
-                                widget="selection"
-                                help="Academic year of Student"
-                                readonly="state in ['alumni','terminate'] or teachr_user_grp"
-                            />
                             <!-- <field
                                 name="leaving_certificate"
                                 attrs="{'readonly':[('state','in',['alumni','terminate'])]}"
@@ -137,6 +129,13 @@
                                 placeholder="Medium"
                                 widget="selection"
                                 readonly="state in ['alumni','terminate'] or 1"
+                            />
+                            <field
+                                name="year"
+                                placeholder="Year"
+                                widget="selection"
+                                help="Academic year of Student"
+                                readonly="state in ['alumni','terminate'] or teachr_user_grp"
                             />
                         </group>
                     </group>
