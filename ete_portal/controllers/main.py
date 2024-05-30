@@ -103,8 +103,6 @@ class WebsiteMyAccount(CustomerPortal):
                 grouped_result = [Results]
         else:
             grouped_result = [result_input_sudo.concat(*g) for k, g in groupbyelem(Results, itemgetter('survey_id'))]
-        print("student>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",student)
-        print("grouped_result>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",grouped_result)
         values.update({
             'date': date_begin,
             'results': Results,

@@ -14,7 +14,6 @@ class SurveyUserInput(models.Model):
     def create_portal_result(self, values):
         
         user = self.env.user
-        print("user>>>>>>>>>>>>>>>>>>>>>>>.",user)
         self = self.sudo()
         if not (values['class_id'] and values['school_id'] and values['student_id'] and values['subject_id'] and values['survey_id']):
             return {
@@ -23,7 +22,6 @@ class SurveyUserInput(models.Model):
         if values['student_id']:
             student_id = self.env['student.student'].sudo().browse(values['student_id']).partner_id
         teacher = self.env['school.teacher'].sudo().search([('user_id', '=', self.env.user.id)],limit=1)
-        print("teacher>>>>>>>>>>>>>>>>>>>>>>>>>>",teacher, teacher.name)
         lst = []
         for key,value in values.get('question_id').items():
             domain = []

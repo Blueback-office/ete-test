@@ -161,7 +161,6 @@ class SchoolTeacher(models.Model):
     def onchange_address_id(self):
         """Onchange method for address."""
         if self.address_id:
-            # 9/0
             self.work_phone = (self.address_id.phone or False,)
             self.mobile_phone = self.address_id.mobile or False
 
@@ -180,7 +179,7 @@ class SchoolTeacher(models.Model):
         if self.user_id:
             self.name = self.name or self.user_id.name
             self.work_email = self.user_id.email
-            self.image = self.image or self.user_id.image
+            self.image_1920 = self.image_1920 or self.user_id.image_1920
 
     @api.onchange("school_id")
     def onchange_school(self):
