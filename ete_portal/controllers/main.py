@@ -29,6 +29,15 @@ class WebsiteMyAccount(CustomerPortal):
         return values
     
 
+    @http.route(['/result/class_infos/<int:standard>'], type='json', auth="public", methods=['POST'], website=True)
+    def class_infos(self, standard, **kw):
+        standard = request.env['school.standard'].sudo().browse(standard)
+        
+        return dict(
+            students=[(st.id, st.name) for st in standard.get_result_class_students()],
+            subjects=[(sub.id, sub.name) for sub in standard.get_result_class_subjects()],
+        )
+
     @http.route(['/result', '/result/page/<int:page>'], type='http', auth="user", website=True)
     def portal_my_results(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, groupby='none', **kw):
         values = self._prepare_portal_layout_values()
@@ -43,6 +52,7 @@ class WebsiteMyAccount(CustomerPortal):
         Student_obj = request.env['student.student']
         Subject_obj = request.env['subject.subject']
         Survey_obj = request.env['survey.survey']
+        SchoolStd_obj = request.env['school.standard']
         # user = request.env.user
         # emp = request.env['hr.employee'].search([('user_id', '=', user.id)],
         #                                         limit=1)
@@ -91,12 +101,14 @@ class WebsiteMyAccount(CustomerPortal):
         if groupby == 'exam':
             order = "survey_id, %s" % order
         # content according to pager and archive selected
-        school = School_obj.search([])
-        standard = Standard_obj.search([])
-        student = Student_obj.sudo().search([])
+        
+        user_teacher = request.env['school.teacher'].sudo().search([('user_id', '=', request.env.user.id)],limit=1)
+        school = School_obj.search([('id','=', user_teacher.school_id.id)])
+        standard = user_teacher.school_id.standards
+        student = standard.student_ids
         subject = Subject_obj.search([])
         survey = Survey_obj.search([])
-        Results = result_input.search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
+        Results = result_input.sudo().search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
         if groupby == 'none':
             grouped_result = []
             if Results:

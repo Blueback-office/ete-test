@@ -79,7 +79,7 @@
                                 <div class="col-md-4">
 		                            <div class="mb-3">
 		                                <label class="col-form-label hdd4" for="class_id">Class</label>
-		                                <select name="class_id" class="form-control class_select" required="True">
+		                                <select name="class_id" class="form-control class_select" id="class_id" required="True">
 		                                    <option value="0">Select...</option>
 		                                    <t t-foreach="standards or []" t-as="standard">
 		                                        <option t-att-value="standard.id">
@@ -89,7 +89,21 @@
 		                                </select>
 		                            </div>
 	                            </div>
-	                            <div class="col-md-4">
+	                            
+	                            <div class="col-md-4" t-att-style="'display: none'">
+                                    <label class="col-form-label hdd4" for="student_id">Student</label>
+                                    <select name="student_id" class="form-control student_select" required="True" data-init="1">
+                                        <option value="0">Select...</option>
+                                        <t t-foreach="students or []" t-as="student">
+                                            <option t-att-value="student.id">
+                                                <t t-esc="student.name" />
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+	                            
+	                            
+	                            <!-- <div class="col-md-4">
 		                            <div class="mb-3">
 		                                <label class="col-form-label hdd4" for="student_id">Student</label>
 		                                <select name="student_id" class="form-control student_select" required="True">
@@ -101,19 +115,17 @@
 		                                    </t>
 		                                </select>
 		                            </div>
-	                            </div>
-	                            <div class="col-md-4">
-		                            <div class="mb-3">
-		                                <label class="col-form-label hdd4" for="subject_id">Subject</label>
-		                                <select name="subject_id" class="form-control subject_select" required="True">
-		                                    <option value="0">Select...</option>
-		                                    <t t-foreach="subjects or []" t-as="subject">
-		                                        <option t-att-value="subject.id">
-		                                            <t t-esc="subject.name" />
-		                                        </option>
-		                                    </t>
-		                                </select>
-		                            </div>
+	                            </div> -->
+	                            <div class="col-md-4" t-att-style="'display: none'">
+	                                <label class="col-form-label hdd4" for="subject_id">Subject</label>
+	                                <select name="subject_id" class="form-control subject_select" required="True" >
+	                                    <option value="0">Select...</option>
+	                                    <t t-foreach="subjects or []" t-as="subject">
+	                                        <option t-att-value="subject.id">
+	                                            <t t-esc="subject.name" />
+	                                        </option>
+	                                    </t>
+	                                </select>
 	                            </div>
 	                            <div class="col-md-12">
                                     <div class="mb-3">

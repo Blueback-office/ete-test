@@ -1,8 +1,10 @@
 /** @odoo-module **/
 import { _t } from "@web/core/l10n/translation";
+
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { parseDate, formatDate, serializeDate } from "@web/core/l10n/dates";
-const { DateTime } = luxon;
+
+import { debounce } from "@web/core/utils/timing";const { DateTime } = luxon;
 import { jsonrpc } from "@web/core/network/rpc_service";
 
 
@@ -21,8 +23,8 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
     init() {
         this._super(...arguments);
         this.orm = this.bindService("orm");
+        this._changeClass = debounce(this._changeClass.bind(this), 500);
         this.rpc = this.bindService("rpc");
-
     },
 
     //--------------------------------------------------------------------------
@@ -116,7 +118,6 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
         this.rpc('/get_survey_data', {
             survey_id: surveyId
         }).then(function (data) {
-            console.log("data",data);
             var surveyData = '';
             for (var questionId in data.question_and_page_data) {
                 var questionData = data.question_and_page_data[questionId];
@@ -166,11 +167,66 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
             $('.get_survey').html(surveyData);
         });
     },
+
+    /**
+     * @private
+     */
+    _changeClass: function () {
+        if (!$("#class_id").val()) {
+            return;
+        }
+        return this.rpc("/result/class_infos/" + $("#class_id").val(), {
+        }).then(function (data) {
+            // populate students and display
+            var selectStudents = $("select[name='student_id']");
+            
+            // dont reload students at first loading (done in qweb)  
+            // selectStudents.data('init')===0 || selectStudents.find('option').length===1
+            if (selectStudents ) {
+                if (data.students.length) {
+                    selectStudents.html('');
+                    data.students.forEach((x) => {
+                        var opt = $('<option>').text(x[1])
+                            .attr('value', x[0])
+                            .attr('data-code', x[2]);
+                        selectStudents.append(opt);
+                    });
+                    selectStudents.parent('div').show();
+                } else {
+                    selectStudents.val('').parent('div').hide();
+                }
+                selectStudents.data('init', 0);
+            } else {
+                selectStudents.data('init', 0);
+            }
+            
+            var SelectSubjects = $("select[name='subject_id']");
+            // SelectSubjects.data('init')===0 || SelectSubjects.find('option').length===1
+            if (SelectSubjects) {
+                if (data.subjects.length) {
+                    SelectSubjects.html('');
+                    data.subjects.forEach((x) => {
+                        var opt = $('<option>').text(x[1])
+                            .attr('value', x[0])
+                            .attr('data-code', x[2]);
+                        SelectSubjects.append(opt);
+                    });
+                    SelectSubjects.parent('div').show();
+                } else {
+                    SelectSubjects.val('').parent('div').hide();
+                }
+                SelectSubjects.data('init', 0);
+            } else {
+                SelectSubjects.data('init', 0);
+            }
+        });
+    },
+
     _onChangeSchool: function (ev) {
         console.log("_onChangeSchool");
     },
     _onChangeClass: function (ev) {
-        console.log("_onChangeClass");
+        return this._changeClass();
     },
     _onChangeStudent: function (ev) {
         console.log("_onChangeStudent");

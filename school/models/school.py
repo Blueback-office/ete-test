@@ -437,6 +437,14 @@ class SchoolStandard(models.Model):
             (rec.id, rec.standard_id.name + "[" + rec.division_id.name + "]")
             for rec in self
         ]
+        
+    def get_result_class_students(self):
+        res = self.sudo().student_ids
+        return res
+    
+    def get_result_class_subjects(self):
+        res = self.sudo().subject_ids
+        return res
 
 
 class SchoolSchool(models.Model):
