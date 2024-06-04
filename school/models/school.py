@@ -596,6 +596,14 @@ class SubjectSubject(models.Model):
         compute="_compute_student_subject",
         help="Students which are in this standard",
     )
+    sub_category_ids = fields.Many2many(
+        "sub.category",
+        "sub_category_subject_rel",
+        "subject_id",
+        "sub_category_id",
+        "Subject Category",
+        help="Name to whom this news is related.",
+    )
 
     @api.model_create_multi
     def create(self, values):
@@ -670,6 +678,25 @@ class SubjectSubject(models.Model):
             limit=limit,
             order=order,
         )
+
+
+class SubCategory(models.Model):
+    """Defining a  Sub Category"""
+
+    _name = "sub.category"
+    _description = "Sub Category"
+    _rec_name='display_name'
+
+    name = fields.Char('Category',help="Category",required=True)
+    parent_id = fields.Many2one('sub.category','Parent Subject')
+    display_name = fields.Char(compute='_compute_display_name')
+
+    def _compute_display_name(self):
+        for record in self:
+            if record.parent_id:
+                record.display_name = f"{record.parent_id.name} / {record.name}"
+            else:
+                record.display_name = record.name
 
 
 class SubjectSyllabus(models.Model):

@@ -910,6 +910,7 @@
                         <field name="code" placeholder="Code" string="Code" />
                         <field name="maximum_marks" placeholder="Maximum Marks"/>
                         <field name="minimum_marks" placeholder="Minimum Marks"/>
+                        <field name='sub_category_ids' widget='many2many_tags'/>
                         <field name="is_practical" string="Is Practical" />
                         <field name="is_elective_subject" string="Is Elective Subject"
                         />
@@ -981,6 +982,33 @@
             </tree>
         </field>
     </record>
+
+    <!-- Form View Of Sub Category Information -->
+    <record id="view_sub_category_form" model="ir.ui.view">
+        <field name="name">sub.category.form</field>
+        <field name="model">sub.category</field>
+        <field name="arch" type="xml">
+            <form string="Sub Category">
+                <sheet>
+                    <group>
+                        <field name='name'/>
+                        <field name='parent_id'/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Tree View Of Sub Categories Information -->
+    <record id="view_sub_category_tree" model="ir.ui.view">
+        <field name="name">sub.category.tree</field>
+        <field name="model">sub.category</field>
+        <field name="arch" type="xml">
+            <tree string="Views">
+                <field name='display_name'/>
+            </tree>
+        </field>
+    </record>
+
     <!-- Form View Of Standard Information -->
     <record id="view_standard_standard_form" model="ir.ui.view">
         <field name="name">standard.standard.form</field>
@@ -1105,10 +1133,15 @@
         <field name="res_model">standard.division</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- Action Of Form & Tree Views Of Subject Information -->
+    <!-- Action Of Form & Tree Views Of Subject and their categories Information -->
     <record id="action_subject_subject_form" model="ir.actions.act_window">
         <field name="name">Subjects</field>
         <field name="res_model">subject.subject</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id='action_sub_category' model='ir.actions.act_window'>
+        <field name="name">Sub Category</field>
+        <field name="res_model">sub.category</field>
         <field name="view_mode">tree,form</field>
     </record>
     <!-- Action Of Form & Tree Views Of Standard Information -->
@@ -1406,7 +1439,7 @@
         parent="menu_school_standard_form"
         action="action_class_room"
     />
-    <!-- MenuItem For Configurations->Subject -->
+    <!-- MenuItem For Configurations->Subject and Sub Categories -->
     <menuitem
         id="menu_subject_subject_form"
         name="Subjects"
@@ -1418,6 +1451,12 @@
         name="Subjects"
         parent="menu_subject_subject_form"
         action="action_subject_subject_form"
+    />
+    <menuitem
+        id='menu_sub_category_form'
+        name="Sub Category"
+        parent='menu_subject_subject_form'
+        action='action_sub_category'
     />
     <!-- Menuitem of alumni and terminate -->
     <menuitem
