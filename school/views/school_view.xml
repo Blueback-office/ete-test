@@ -993,6 +993,7 @@
                     <group>
                         <field name='name'/>
                         <field name='parent_id'/>
+                        <field name="code"/>
                     </group>
                 </sheet>
             </form>
@@ -1005,6 +1006,7 @@
         <field name="arch" type="xml">
             <tree string="Views">
                 <field name='display_name'/>
+                <field name="code"/>
             </tree>
         </field>
     </record>

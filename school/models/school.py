@@ -393,7 +393,7 @@ class SchoolStandard(models.Model):
     def _compute_display_name(self):
         """Method to display standard and division"""
         for div in self:
-            div.display_name = f"{div.standard_id.name}-{div.division_id.name}"
+            div.display_name = f"Group {div.standard_id.name}"
 
     @api.onchange("standard_id", "division_id")
     def onchange_combine(self):
@@ -690,6 +690,9 @@ class SubCategory(models.Model):
     name = fields.Char('Category',help="Category",required=True)
     parent_id = fields.Many2one('sub.category','Parent Subject')
     display_name = fields.Char(compute='_compute_display_name')
+    code = fields.Char()
+
+    _sql_constraints = [('unique_code', 'UNIQUE(code)', 'Code Must be Unique!')]
 
     def _compute_display_name(self):
         for record in self:

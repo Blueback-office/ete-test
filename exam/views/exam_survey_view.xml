@@ -6,9 +6,9 @@
 		<field name='inherit_id' ref='survey.survey_survey_view_form'/>
 		<field name='arch' type="xml">
 			<xpath expr="//field[@name='user_id']" position='after'>
-				<field name='school_id'/>
+				<field name='school_id' invisible="1"/>
                 <field name="exam_type" invisible="1"/>
-				<field name='teacher_id'/>
+				<field name='teacher_id' invisible="1"/>
 				<field name='class_id'/>
 				<field name='academic_year_id'/>
                 <field name="subject_id"/>
