@@ -9,14 +9,18 @@
 				<field name='school_id' invisible="1"/>
                 <field name="exam_type" invisible="1"/>
 				<field name='teacher_id' invisible="1"/>
-				<field name='class_id'/>
+				<field name='class_id' invisible='1'/>
+                <field name='standard_id'/>
 				<field name='academic_year_id'/>
-                <field name="subject_id"/>
+                <field name="subject_id" domain="[('standard_ids', 'in', standard_id)]"/>
 				<field name='s_exam_id' invisible="1"/>
                 <field name="option_count"/>
 			</xpath>
             <xpath expr="//button[@name='action_send_survey']" position='attributes'>
                 <attribute name="context">{'default_standard_id' : class_id}</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='constr_mandatory']" position='after'>
+                <field name='sub_category_id'/>
             </xpath>
 		</field>
 	</record>
@@ -27,7 +31,8 @@
         <field name='inherit_id' ref='survey.survey_user_input_view_form'/>
         <field name='arch' type="xml">
             <xpath expr="//group/field[@name='test_entry']" position='after'>
-                <field name='class_id'/>
+                <field name='class_id' invisible='1'/>
+                <field name='standard_id'/>
                 <field name="subject_id"/>
             </xpath>
         </field>
@@ -44,6 +49,19 @@
         </field>
     </record>
 
+    <record id="survey_question_sub_category_inherit" model='ir.ui.view'>
+        <field name='name'>survey.question.sub.category.inherit.form</field>
+        <field name="model">survey.question</field>
+        <field name='inherit_id' ref='survey.survey_question_form'/>
+        <field name='arch' type="xml">
+            <xpath expr="//page[3]" position='inside'>
+                <group string='Sub Categoty'>
+                    <field name='subject_id' invisible='1'/>
+                    <field name='sub_category_id' context="{'subject': subject_id}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
 </odoo>
 
 

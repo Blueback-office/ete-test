@@ -23,7 +23,14 @@ class SchoolTeacher(models.Model):
     )
     standard_id = fields.Many2one(
         "school.standard",
-        "Responsibility of Academic Class",
+        "Responsibility of Academic Classes"
+    )
+    standard_ids = fields.Many2many(
+        "school.standard",
+        "standard_teacher_rel",
+        "teacher_id",
+        "class_id",
+        "Responsibility of Academic Classes",
         help="Standard for which the teacher responsible for.",
     )
     stand_id = fields.Many2one(
@@ -101,7 +108,7 @@ class SchoolTeacher(models.Model):
         if teacher_id.employee_id:
             teacher_id.employee_id.write({
                 'is_teacher': True,
-                'teacher_id':teacher_id.id
+                'teacher_id': teacher_id.id
             })
         if teacher_id.user_id:
             teacher_group = self.env.ref("school.group_school_teacher")

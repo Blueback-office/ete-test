@@ -29,7 +29,7 @@
                         name="class"
                         string="Class"
                         domain="[]"
-                        context="{'group_by':'standard_id'}"
+                        context="{'group_by':'standard_ids'}"
                     />
                     <filter
                         name="manager"
@@ -171,8 +171,7 @@
                         groups="hr.group_hr_user"
                     />
                     <group>
-                        <field name="standard_id" />
-                        <!-- <field name="standard_ids" required="1" widget="many2many_tags"/> -->
+                        <field name="standard_ids" string="Assigned Classes" required="1" widget="many2many_tags"/>
                         <field
                             name="subject_id"
                             required="1"
@@ -244,13 +243,11 @@
                                     <!-- TODO : Need to check this field -->
                                     <!-- <field name="bank_account_id" /> -->
                                 </group>
-                                <group string="Contact Information">
-                                    <!-- <field
-                                        name="address_home_id"
-                                        context="{'show_address': 1}"
-                                        options="{&quot;always_reload&quot;: True, &quot;highlight_first_line&quot;: True}"
-                                    /> -->
-                                </group>
+<!--                                <group string="Contact Information">-->
+<!--                                    <field-->
+<!--                                        name="user_id"-->
+<!--                                    />-->
+<!--                                </group>-->
                                 <group string="Status">
                                     <field name="gender" />
                                     <field name="marital" />

@@ -393,7 +393,7 @@ class SchoolStandard(models.Model):
     def _compute_display_name(self):
         """Method to display standard and division"""
         for div in self:
-            div.display_name = f"Group {div.standard_id.name}"
+            div.display_name = f"{div.standard_id.name} - {div.division_id.name}"
 
     @api.onchange("standard_id", "division_id")
     def onchange_combine(self):
@@ -602,7 +602,7 @@ class SubjectSubject(models.Model):
         "subject_id",
         "sub_category_id",
         "Subject Category",
-        help="Name to whom this news is related.",
+        help="Name to those category.",
     )
 
     @api.model_create_multi
@@ -701,6 +701,13 @@ class SubCategory(models.Model):
             else:
                 record.display_name = record.name
 
+    @api.model
+    def _name_search(self, name, domain=None, operator=None, limit=None, order=None):
+
+        if self._context.get('subject'):
+            subject_rec = self.env['subject.subject'].browse(int(self._context.get('subject')))
+            domain =  [('id','in',subject_rec.sub_category_ids.ids)]
+        return super()._name_search(name, domain, operator, limit, order)
 
 class SubjectSyllabus(models.Model):
     """Defining a  syllabus"""
