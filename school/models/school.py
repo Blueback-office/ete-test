@@ -446,6 +446,10 @@ class SchoolStandard(models.Model):
         res = self.sudo().subject_ids
         return res
 
+    def get_result_class_survey(self):
+        class_survey = self.env['survey.survey'].sudo().search([('standard_id', '=', self.id)])
+        return class_survey
+
 
 class SchoolSchool(models.Model):
     """Defining School Information"""

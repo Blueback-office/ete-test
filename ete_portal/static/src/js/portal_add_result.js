@@ -24,7 +24,9 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
         this._super(...arguments);
         this.orm = this.bindService("orm");
         this._changeClass = debounce(this._changeClass.bind(this), 500);
+        /*this._changeSub = debounce(this._changeSub.bind(this), 500);*/
         this.rpc = this.bindService("rpc");
+        
     },
 
     //--------------------------------------------------------------------------
@@ -219,6 +221,58 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
             } else {
                 SelectSubjects.data('init', 0);
             }
+            
+            var SelectSurvey = $("select[name='survey_id']");
+            // SelectSubjects.data('init')===0 || SelectSubjects.find('option').length===1
+            if (SelectSurvey) {
+                if (data.subjects.length) {
+                    SelectSurvey.html('');
+                    data.surveys.forEach((x) => {
+                        var opt = $('<option>').text(x[1])
+                            .attr('value', x[0])
+                            .attr('data-code', x[2]);
+                        SelectSurvey.append(opt);
+                    });
+                    SelectSurvey.parent('div').show();
+                } else {
+                    SelectSurvey.val('').parent('div').hide();
+                }
+                SelectSurvey.data('init', 0);
+            } else {
+                SelectSurvey.data('init', 0);
+            }
+        });
+    },
+    
+    /**
+     * @private
+     */
+    _changeSub: function () {
+        if (!$("#subject_id").val()) {
+            return;
+        }
+        return this.rpc("/result/subject_infos/" + $("#subject_id").val(), {
+        }).then(function (data) {
+            // populate survey and display
+            var SelectSurvey = $("select[name='survey_id']");
+            // SelectSubjects.data('init')===0 || SelectSubjects.find('option').length===1
+            if (SelectSurvey) {
+                if (data.subjects.length) {
+                    SelectSurvey.html('');
+                    data.surveys.forEach((x) => {
+                        var opt = $('<option>').text(x[1])
+                            .attr('value', x[0])
+                            .attr('data-code', x[2]);
+                        SelectSurvey.append(opt);
+                    });
+                    SelectSurvey.parent('div').show();
+                } else {
+                    SelectSurvey.val('').parent('div').hide();
+                }
+                SelectSurvey.data('init', 0);
+            } else {
+                SelectSurvey.data('init', 0);
+            }
         });
     },
 
@@ -232,7 +286,7 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
         console.log("_onChangeStudent");
     },
     _onChangeSubject: function (ev) {
-        console.log("_onChangeSubject");
+        /*return this._changeSub();*/
     },
     
     

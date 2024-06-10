@@ -32,11 +32,20 @@ class WebsiteMyAccount(CustomerPortal):
     @http.route(['/result/class_infos/<int:standard>'], type='json', auth="public", methods=['POST'], website=True)
     def class_infos(self, standard, **kw):
         standard = request.env['school.standard'].sudo().browse(standard)
-        
         return dict(
             students=[(st.id, st.name) for st in standard.get_result_class_students()],
             subjects=[(sub.id, sub.name) for sub in standard.get_result_class_subjects()],
+            surveys=[(sur.id, sur.title) for sur in standard.get_result_class_survey()],
         )
+        
+    # @http.route(['/result/subject_infos/<int:subject>'], type='json', auth="public", methods=['POST'], website=True)
+    # def subject_infos(self, subject, **kw):
+    #     subject = request.env['subject.subject'].sudo().browse(subject)
+    #     return dict(
+    #         students=[(st.id, st.name) for st in standard.get_result_class_students()],
+    #         subjects=[(sub.id, sub.name) for sub in standard.get_result_class_subjects()],
+    #         surveys=[(sur.id, sur.title) for sur in standard.get_result_class_survey()],
+    #     )
 
     @http.route(['/result', '/result/page/<int:page>'], type='http', auth="user", website=True)
     def portal_my_results(self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, groupby='none', **kw):
@@ -104,7 +113,8 @@ class WebsiteMyAccount(CustomerPortal):
         
         user_teacher = request.env['school.teacher'].sudo().search([('user_id', '=', request.env.user.id)],limit=1)
         school = School_obj.search([('id','=', user_teacher.school_id.id)])
-        standard = user_teacher.school_id.standards
+        # standard = user_teacher.school_id.standards
+        standard = user_teacher.standard_ids
         student = standard.student_ids
         subject = Subject_obj.search([])
         survey = Survey_obj.search([])

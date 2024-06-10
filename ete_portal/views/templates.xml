@@ -118,7 +118,7 @@
 	                            </div> -->
 	                            <div class="col-md-4" t-att-style="'display: none'">
 	                                <label class="col-form-label hdd4" for="subject_id">Subject</label>
-	                                <select name="subject_id" class="form-control subject_select" required="True" >
+	                                <select name="subject_id" class="form-control subject_select" id="subject_id" required="True" >
 	                                    <option value="0">Select...</option>
 	                                    <t t-foreach="subjects or []" t-as="subject">
 	                                        <option t-att-value="subject.id">
@@ -127,18 +127,16 @@
 	                                    </t>
 	                                </select>
 	                            </div>
-	                            <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label class="col-form-label hdd4" for="survey_id">Exam</label>
-                                        <select name="survey_id" class="form-control exam_select survey_id" required="True">
-                                            <option value="0">Select...</option>
-                                            <t t-foreach="surveys or []" t-as="survey">
-                                                <option t-att-value="survey.id">
-                                                    <t t-esc="survey.title" />
-                                                </option>
-                                            </t>
-                                        </select>
-                                    </div>
+	                            <div class="col-md-12" t-att-style="'display: none'">
+                                    <label class="col-form-label hdd4" for="survey_id">Exam</label>
+                                    <select name="survey_id" class="form-control exam_select survey_id" required="True">
+                                        <option value="0">Select...</option>
+                                        <t t-foreach="surveys or []" t-as="survey">
+                                            <option t-att-value="survey.id">
+                                                <t t-esc="survey.title" />
+                                            </option>
+                                        </t>
+                                    </select>
                                 </div>
                             </div>
                             <div class="mb-3">
