@@ -83,7 +83,7 @@
 		                                    <option value="0">Select...</option>
 		                                    <t t-foreach="standards or []" t-as="standard">
 		                                        <option t-att-value="standard.id">
-		                                            <t t-esc="standard.name" />
+		                                            <t t-esc="standard.display_name" />
 		                                        </option>
 		                                    </t>
 		                                </select>
