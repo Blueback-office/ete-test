@@ -28,7 +28,7 @@ class SurveyUserInput(models.Model):
             if int(value) == 1:
                 domain = [('question_id', '=', int(key)), ('is_correct', '=', True)]
             else:
-                domain = [('question_id', '=', int(key))]
+                domain = [('question_id', '=', int(key)), ('is_correct', '=', False)]
             question_answer = self.env['survey.question.answer'].search(domain)
             vals = [0, 0, {
                 'question_id': key,

@@ -447,7 +447,7 @@ class SchoolStandard(models.Model):
         return res
 
     def get_result_class_survey(self):
-        class_survey = self.env['survey.survey'].sudo().search([('standard_id', '=', self.id)])
+        class_survey = self.env['survey.survey'].sudo().search([('standard_id', '=', self.standard_id.id)])
         return class_survey
 
 
