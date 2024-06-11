@@ -226,7 +226,7 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
             // SelectSubjects.data('init')===0 || SelectSubjects.find('option').length===1
             if (SelectSurvey) {
                 if (data.subjects.length) {
-                    SelectSurvey.html('');
+                    SelectSurvey.html("<option></option>");
                     data.surveys.forEach((x) => {
                         var opt = $('<option>').text(x[1])
                             .attr('value', x[0])
@@ -241,6 +241,7 @@ publicWidget.registry.PortalAddResult = publicWidget.Widget.extend({
             } else {
                 SelectSurvey.data('init', 0);
             }
+            
         });
     },
     
