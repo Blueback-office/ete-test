@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_school_portal_user,school.school.portal.user,school.model_school_school,base.group_portal,1,0,0,0
+access_standard_standard_portal_user,standard.standard.portal.user,school.model_standard_standard,base.group_portal,1,0,0,0
+access_student_student_portal_user,student.student.portal.user,school.model_student_student,base.group_portal,1,1,1,1
+access_subject_subject_portal_user,subject.subject.portal.user,school.model_subject_subject,base.group_portal,1,0,0,0
+access_survey_survey_portal_user,survey.survey.portal.user,survey.model_survey_survey,base.group_portal,1,1,0,0
+access_survey_user_input_teacher_portal,survey.user.input.techer.portal,survey.model_survey_user_input,base.group_portal,1,1,1,1
+access_res_partner_portal_user,res.partner.portal.user,base.model_res_partner,base.group_portal,1,0,0,0
+access_school_standards_portal_uesr,school.standards.portal.user,school.model_school_standard,base.group_portal,1,0,0,0
